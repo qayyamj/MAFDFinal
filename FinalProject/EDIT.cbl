@@ -283,14 +283,14 @@
            write valid-record from ws-valid-heading-1.
            write valid-record from ws-valid-heading-2
              after advancing 2 lines.
-           write valid-record from ws-valid-heading-2
+           write valid-record from ws-valid-heading-3
              after advancing 2 lines.
 
       * Invalid file Processes
            write invalid-record from ws-invalid-heading-1.
            write invalid-record from ws-invalid-heading-2
              after advancing 2 lines.
-           write invalid-record from ws-invalid-heading-2
+           write invalid-record from ws-invalid-heading-3
              after advancing 2 lines.
 
       * Exit program

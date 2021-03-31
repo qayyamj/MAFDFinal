@@ -120,6 +120,28 @@
          05 ws-error-invalid-total          pic Z99
                value 0.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
        procedure division.
        000-main.
 

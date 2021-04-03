@@ -27,246 +27,136 @@
            record contains 36 characters
            data record is data-record.
 
-       01     data-record.
-         05      transaction-code          pic       x.
-           88     ws-valid-code 
-               value                       "S", "R", "L".
-         05      transaction-amount        pic       9(5)V99.
-         05      payment-type              pic       xx.
-           88     ws-valid-pay-type
-               value                    "CA", "CR", "DB".
-         05      store-number              pic       xx.
-           88     ws-valid-store-num
+       01 data-record.
+         05 transaction-code               pic x.
+           88 ws-valid-code
+               value "S", "R", "L".
+         05 transaction-amount             pic 9(5)V99.
+         05 payment-type                   pic xx.
+           88 ws-valid-pay-type
+               value "CA", "CR", "DB".
+         05 store-number                   pic xx.
+           88 ws-valid-store-num
                values "01", "02", "03", "04", "05", "12".
-         05      invoice-number            pic       x(9).
-         05      invoice-number-redefine
-               redefines invoice-number.                                           
-             10  invoice1                  pic       x.
-           88     ws-valid-invoice1
-               values            "A", "B", "C", "D", "E".               
-             10  invoice2                  pic       x.
-           88     ws-valid-invoice2                         
-               values            "A", "B", "C", "D", "E".                            
-             10 invoice-dash               pic       x.
-             10 invoice-numbers            pic       9(6).
-           88     valid-nums
-               value           100000        thru 900000.
-         05      sku-code                  pic       x(15).
-           88     invalid-sku             value     spaces.
-      *_________________________________________________________________________
-
+         05 invoice-number                 pic x(9).
+         05 invoice-number-redefine
+               redefines invoice-number.
+           10 invoice1                     pic x.
+             88 ws-valid-invoice1
+               values "A", "B", "C", "D", "E".
+           10 invoice2                     pic x.
+             88 ws-valid-invoice2
+               values "A", "B", "C", "D", "E".
+           10 invoice-dash                 pic x.
+           10 invoice-numbers              pic 9(6).
+             88 valid-nums
+               value 100000 thru 900000.
+         05 sku-code                       pic x(15).
+           88 invalid-sku
+               value spaces.
+      *________________________________________________________________
        fd valid-file
           data record is valid-record
           record contains 36 characters.
 
-       01     valid-record                 pic       x(36).
-      *-------------------------------------------------------------------------
-       01     ws-valid-heading-1.
-         05    filler                      pic       x(11)
-               value "TRANSACTION".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(11)
-               value "TRANSACTION".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(07)
-               value "PAYMENT".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(05)
-               value "STORE".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(07)
-               value "INVOICE".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(03)
-               value "SKU".
-      *-------------------------------------------------------------------------
-       01     ws-valid-heading-2.
-         05    filler                      pic       x(04)
-               value "CODE".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(06)
-               value "AMOUNT".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(04)
-               value "TYPE".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(06)
-               value "NUMBER".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(06)
-               value "NUMBER".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(04)
-               value "CODE".
-      *-------------------------------------------------------------------------
-       01     ws-valid-heading-3.
-         05    filler                      pic       x(05)
-               value "-----".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(07)
-               value "-------".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(04)
-               value "----".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(04)
-               value "----".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(09)
-               value "---------".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(15)
-               value "---------------".
-      *_________________________________________________________________________
-
+       01 valid-record                     pic x(36).
+ 
        fd invalid-file
           data record is invalid-record
           record contains 36 characters.
 
-       01     invalid-record               pic       x(36).
-      *-------------------------------------------------------------------------
-       01     ws-invalid-heading-1.
-         05    filler                      pic       x(11)
-               value "TRANSACTION".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(11)
-               value "TRANSACTION".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(07)
-               value "PAYMENT".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(05)
-               value "STORE".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(07)
-               value "INVOICE".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(03)
-               value "SKU".
-      *-------------------------------------------------------------------------
-       01     ws-invalid-heading-2.
-         05    filler                      pic       x(04)
-               value "CODE".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(06)
-               value "AMOUNT".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(04)
-               value "TYPE".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(06)
-               value "NUMBER".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(06)
-               value "NUMBER".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(04)
-               value "CODE".
-      *-------------------------------------------------------------------------
-       01     ws-invalid-heading-3.
-         05    filler                      pic       x(05)
-               value "-----".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(07)
-               value "-------".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(04)
-               value "----".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(04)
-               value "----".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(09)
-               value "---------".
-         05    filler                      pic       x(02)
-               value spaces.
-         05    filler                      pic       x(15)
-               value "---------------".
-      *_________________________________________________________________________
-
+       01 invalid-record                   pic x(36).
        fd errors-file
           data record is errors-record
           record contains 100 characters.
 
-       01     errors-record                pic       x(100).
-      *-------------------------------------------------------------------------
-       01     ws-error-heading-1.
-         05    filler                      pic       x(02)
-               value spaces.
-      *_________________________________________________________________________                      
+       01 errors-record                    pic x(100).
+
+
        working-storage section.
-       01     ws-eof-flag                  pic       x
-               value       "N".
-      *-------------------------------------------------------------------------
-       01     ws-detail-line.
-         05    ws-trans-code               pic       x.
-         05    ws-trans-amount             pic       9(5)V99.
-         05    ws-pay-type                 pic       xx.
-         05    ws-store-num                pic       xx.
-         05    ws-invoice-num              pic       x(9).
-         05    ws-sku-code                 pic       x(15).
-      *------------------------------------------------------------------------
-       01      ws-detail-invalid-line.
-         05     ws-invalid-trans-code      pic       x.
-         05     ws-invalid-trans-amount    pic       9(5)V99.
-         05     ws-invalid-pay-type        pic       xx.
-         05     ws-invalid-store-num       pic       xx.
-         05     ws-invalid-invoice-num     pic       x(9).
-         05     ws-invalid-sku-code        pic       x(15).
-      *------------------------------------------------------------------------
-       01     ws-error-report-total.
-         05 filler                         pic       x(15)
+       01 ws-eof-flag pic x value "N".
+      *-----------------------------------------------------------------
+       01 ws-detail-line.
+         05 ws-trans-code                  pic x.
+         05 ws-trans-amount                pic 9(5)V99.
+         05 ws-pay-type                    pic xx.
+         05 ws-store-num                   pic xx.
+         05 ws-invoice-num                 pic x(9).
+         05 ws-sku-code                    pic x(15).
+      *-----------------------------------------------------------------
+       01 ws-detail-invalid-line.
+         05 ws-invalid-trans-code          pic x.
+         05 ws-invalid-trans-amount        pic 9(5)V99.
+         05 ws-invalid-pay-type            pic xx.
+         05 ws-invalid-store-num           pic xx.
+         05 ws-invalid-invoice-num         pic x(9).
+         05 ws-invalid-sku-code            pic x(15).
+      *-----------------------------------------------------------------
+       01 ws-constants.
+         05 ws-errors                      pic 99
+               value 0.
+         05 ws-errors-total                pic 99
+               value 0.
+         05 ws-invalid-total               pic 99
+               value 0.
+         05 ws-valid-total                 pic 99
+               value 0.
+         05 ws-transaction-error           pic x(24)
+               value "INVALID TRANSACTION CODE".
+         05 ws-transaction-num-error       pic x(36)
+               value "TRANSACTION AMOUNT MUST BE NUMERIC".
+         05 ws-payment-type-error          pic x(20)
+               value "INVALID PAYMENT TYPE".
+         05 ws-store-num-error             pic x(20)
+               value "INVALID STORE NUMBER".
+         05 ws-invoice-alpha-error         pic x(31)
+               value "INVOICE NUMBER INVALID FORMAT".
+         05 ws-invoice-alpha-error         pic x(33)
+               value "INVOICE NUMBER MUST BE ALPHABETIC".
+         05 ws-invoice-alpha-error         pic x(33)
+               value "INVOICE NUMBER CANNOT BE REPEATED".
+         05 ws-invoice-alpha-error         pic x(28)
+               value "INVOICE NUMBER NOT IN RANGE".
+         05 ws-sku-error                   pic x(26)
+               value "SKU CODE IS NOT ALPHABETIC".
+
+
+       01 ws-error-report1.
+         05 filler                         pic x(6)
+               value "ERRORS".
+         05 filler                         pic x(5)
+               value spaces.
+         05 filler                         pic x(6)
+               value "REPORT".
+       01 ws-error-report2.
+         05 filler                         pic x(17)
+               value "-----------------".
+      *-----------------------------------------------------------------
+
+       01 ws-error-report-total.
+         05 filler                         pic x(15)
                value "Total Records: ".
-         05 filler                         pic       x(5)
+         05 filler                         pic x(5)
                value spaces.
-         05 ws-error-report-total          pic       Z99
+         05 ws-error-report-total          pic Z99
                value 0.
-      *------------------------------------------------------------------------
-       01     ws-error-report-valid.
-         05    filler                      pic       x(21)
+      *-----------------------------------------------------------------
+       01 ws-error-report-valid.
+         05 filler                         pic x(21)
                value "Total Valid Records: ".
-         05    filler                      pic       x(5)
+         05 filler                         pic x(5)
                value spaces.
-         05    ws-error-valid-total        pic       Z99
+         05 ws-error-valid-total           pic Z99
                value 0.
-      *------------------------------------------------------------------------
-       01     ws-error-report-invalid.
-         05    filler                      pic       x(23)
+      *-----------------------------------------------------------------
+       01 ws-error-report-invalid.
+         05 filler                         pic x(23)
                value "Total Invalid Records: ".
-         05    filler                      pic       x(5)
+         05 filler                         pic x(5)
                value spaces.
-         05   ws-error-invalid-total       pic       Z99
+         05 ws-error-invalid-total         pic Z99
                value 0.
-      **************************************************************************
+      ******************************************************************
        procedure division.
        000-main.
       * Open files
@@ -279,20 +169,6 @@
                at end
                    move "y" to ws-eof-flag.
 
-      * Valid file Processes
-           write valid-record from ws-valid-heading-1.
-           write valid-record from ws-valid-heading-2
-             after advancing 2 lines.
-           write valid-record from ws-valid-heading-3
-             after advancing 2 lines.
-
-      * Invalid file Processes
-           write invalid-record from ws-invalid-heading-1.
-           write invalid-record from ws-invalid-heading-2
-             after advancing 2 lines.
-           write invalid-record from ws-invalid-heading-3
-             after advancing 2 lines.
-
       * Exit program
            display "press enter key to exit...".
            accept return-code.
@@ -301,7 +177,57 @@
            close input-file.
            close valid-file.
            close invalid-file.
-           goback.
-      *-------------------------------------------------------------------------
+
+      *-----------------------------------------------------------------
+       100-process-records.
+           perform 200-validating-data.
+      *    stuff go here WIP
+
+
+
+
+           read input-file
+               at end
+                   move "N" to ws-eof-flag.
+
+       200-validating-data.
+           if not ws-valid-code then
+               add 1 to ws-errors
+               move ws-transaction-error to ws-errors-total
+
+           end-if.
+
+
+           if not transaction-amount is numeric then
+               add 1 to ws-errors
+               move ws-invalid-trans-amount to ws-errors-total
+
+           end-if.
+
+      *Gotta do shit to move something to total error for invalid record
+      *gotta validate spaces...
+      *need to rewrite errors to increment 
+      *need to write error and print totals
+
+
+
+           if ws-errors = 0 then
+               add 1 to ws-valid-total
+               move transaction-code to ws-trans-code
+               move transaction-amount to ws-trans-amount
+               move payment-type to ws-pay-type
+               move store-number to ws-store-num
+               move invoice-number to ws-invoice-num
+               move sku-code to ws-sku-code
+           else
+               add 1 to ws-invalid-total
+               move transaction-code to ws-invalid-trans-code
+               move transaction-amount to ws-invalid-trans-amount
+               move payment-type to ws-invalid-pay-type
+               move store-number to ws-invalid-store-num
+               move invoice-number to ws-invalid-invoice-num
+               move sku-code to ws-invalid-sku-code
+
+           end-if.
        end program EDIT.
-      **************************************************************************
+      ******************************************************************

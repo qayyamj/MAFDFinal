@@ -1,28 +1,29 @@
        identification division.
-       author. Qayyam Jamal, Menu k, Aadithkeshev.
        program-id. EDIT.
+       author. Qayyam Jamal, Menu k, Aadithkeshev.
       **************************************************************************
        environment division.
        input-output section.
        file-control.
            select input-file
-               assign to "../../project6.dat"
+               assign to "bin/../project6.dat"
                organization is line sequential.
 
            select valid-file
-               assign to "../../../valid.data"
+               assign to "../../valid.data"
                organization is line sequential.
 
            select invalid-file
-               assign to "../../../invalid.data"
+               assign to "../../invalid.data"
                organization is line sequential.
 
            select errors-file
-               assign to "../../../ErrorReport.out"
+               assign to "../../ErrorReport.out"
                organization is line sequential.
       **************************************************************************
        data division.
        file section.
+
        fd input-file
            record contains 36 characters
            data record is data-record.
@@ -109,13 +110,13 @@
                value "INVALID PAYMENT TYPE".
          05 ws-store-num-error             pic x(20)
                value "INVALID STORE NUMBER".
-         05 ws-invoice-alpha-error         pic x(31)
+         05 ws-invoice-format-error         pic x(31)
                value "INVOICE NUMBER INVALID FORMAT".
          05 ws-invoice-alpha-error         pic x(33)
                value "INVOICE NUMBER MUST BE ALPHABETIC".
-         05 ws-invoice-alpha-error         pic x(33)
+         05 ws-invoice-repeat-error         pic x(33)
                value "INVOICE NUMBER CANNOT BE REPEATED".
-         05 ws-invoice-alpha-error         pic x(28)
+         05 ws-invoice-range-error         pic x(28)
                value "INVOICE NUMBER NOT IN RANGE".
          05 ws-sku-error                   pic x(26)
                value "SKU CODE IS NOT ALPHABETIC".
@@ -131,9 +132,23 @@
        01 ws-error-report2.
          05 filler                         pic x(17)
                value "-----------------".
+
+       01 ws-error-report-num.
+         05 filler                         pic x
+               value spaces.
+         05 filler                         pic x(5)
+               value "Line ".
+         05 ws-error-num                   pic ZZ9
+               value 0.
+         05 filler                         pic x(5)
+               value spaces.
+         05 ws-error-amount                pic x(40).
+         05 ws-error-redef                 redefines
+               ws-error-amount occurs 10 times.
+           10 ws-error-total-amount        pic x(40).
       *-----------------------------------------------------------------
 
-       01 ws-error-report-total.
+       01 ws-error-report-records.
          05 filler                         pic x(15)
                value "Total Records: ".
          05 filler                         pic x(5)
@@ -160,23 +175,19 @@
        procedure division.
        000-main.
       * Open files
-           open input input-file.
-           open output valid-file.
-           open output invalid-file.
+           open input input-file, output valid-file, invalid-file,
+           errors-file.
 
-      * Initial read of input file
-           read input-file
-               at end
-                   move "y" to ws-eof-flag.
+
+           perform 100-process-records.
+
 
       * Exit program
            display "press enter key to exit...".
            accept return-code.
 
       * Close files and end program
-           close input-file.
-           close valid-file.
-           close invalid-file.
+           close input-file, valid-file, invalid-file, errors-file.
 
       *-----------------------------------------------------------------
        100-process-records.
@@ -193,21 +204,58 @@
        200-validating-data.
            if not ws-valid-code then
                add 1 to ws-errors
-               move ws-transaction-error to ws-errors-total
-
+               move ws-transaction-error to ws-error-redef(ws-errors)
            end-if.
 
 
            if not transaction-amount is numeric then
                add 1 to ws-errors
-               move ws-invalid-trans-amount to ws-errors-total
-
+               move ws-invalid-trans-amount to  ws-error-redef(ws-errors)
            end-if.
 
-      *Gotta do shit to move something to total error for invalid record
-      *gotta validate spaces...
-      *need to rewrite errors to increment 
-      *need to write error and print totals
+           if not ws-valid-pay-type then
+               add 1 to ws-errors
+               move ws-payment-type-error to ws-error-redef(ws-errors)
+           end-if.
+
+           if not ws-valid-store-num then
+               add 1 to ws-errors
+               move ws-store-num-error to ws-error-redef(ws-errors)
+           end-if.
+
+           if not invoice1 = invoice2 then
+               add 1 to ws-errors
+               move ws-invoice-format-error - to ws-error-redef(ws-errors)
+           end-if.
+
+           if not invoice-numbers is numeric then
+               add 1 to ws-errors
+               move ws-invoice-repeat-error to ws-error-redef(ws-errors)
+           end-if.
+
+           if not ws-valid-invoice1 then
+               add 1 to ws-errors
+               move ws-invoice-alpha-error to ws-error-redef(ws-errors)
+           end-if.
+
+           if not ws-valid-invoice2 then
+               add 1 to ws-errors
+               move ws-invoice-alpha-error to ws-error-redef(ws-errors)
+           end-if.
+           if not invoice-numbers <  900000  then
+               add 1 to ws-errors
+               move ws-invoice-range-error to ws-error-redef(ws-errors)
+           end-if.
+
+           if not invoice-numbers > 100000 then
+               add 1 to ws-errors
+               move ws-invoice-range-error to ws-error-redef(ws-errors)
+           end-if.
+           if not sku-code = spaces then
+               add 1 to ws-errors
+               move ws-sku-error to ws-error-redef(ws-errors)
+           end-if.
+       
 
 
 
@@ -227,7 +275,10 @@
                move store-number to ws-invalid-store-num
                move invoice-number to ws-invalid-invoice-num
                move sku-code to ws-invalid-sku-code
-
            end-if.
+
+
+
+
        end program EDIT.
       ******************************************************************

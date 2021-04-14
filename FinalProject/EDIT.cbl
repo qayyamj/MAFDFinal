@@ -225,7 +225,7 @@
 
            if not invoice1 = invoice2 then
                add 1 to ws-errors
-               move ws-invoice-format-error - to ws-error-redef(ws-errors)
+               move ws-invoice-format-error  to ws-error-redef(ws-errors)
            end-if.
 
            if not invoice-numbers is numeric then

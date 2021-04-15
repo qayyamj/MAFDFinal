@@ -97,7 +97,7 @@
        01 ws-constants.
          05 ws-errors                      pic 99
                value 0.
-         05 ws-errors-total                pic 99
+         05 ws-errors-total                pic 9(3)
                value 0.
          05 ws-invalid-total               pic 99
                value 0.
@@ -111,11 +111,11 @@
                value "INVALID PAYMENT TYPE".
          05 ws-store-num-error             pic x(20)
                value "INVALID STORE NUMBER".
-         05 ws-invoice-format-error         pic x(31)
+         05 ws-invoice-format-error        pic x(31)
                value "INVOICE NUMBER INVALID FORMAT".
          05 ws-invoice-alpha-error         pic x(33)
                value "INVOICE NUMBER MUST BE ALPHABETIC".
-         05 ws-invoice-repeat-error         pic x(33)
+         05 ws-invoice-repeat-error        pic x(33)
                value "INVOICE NUMBER CANNOT BE REPEATED".
          05 ws-invoice-range-error         pic x(28)
                value "INVOICE NUMBER NOT IN RANGE".
@@ -202,15 +202,17 @@
 
       *-----------------------------------------------------------------
        100-process-records.
-
            perform 200-validating-data.
-      *    stuff go here WIP
-
            read input-file
                at end
                    move "Y" to ws-eof-flag.
 
        200-validating-data.
+           move spaces to ws-detail-line.
+           move spaces to ws-detail-invalid-line.
+           move 0 to ws-error-report-num.
+           move 0 to ws-errors.
+
 
            if not ws-valid-code then
                add 1 to ws-errors
@@ -265,7 +267,7 @@
                move ws-invoice-range-error to ws-error-redef(ws-errors)
            end-if.
 
-           if not sku-code = spaces then
+           if invalid-sku then
                add 1 to ws-errors
                move ws-sku-error to ws-error-redef(ws-errors)
            end-if.

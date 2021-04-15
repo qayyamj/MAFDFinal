@@ -1,6 +1,5 @@
        identification division.
        author. Qayyam Jamal, Menu k, Aadithkeshev.
-       date-written. 2021-04-15.
        program-id. DATASPLITCOUNT.
 
        environment division.
@@ -74,7 +73,8 @@
        01 ws-cc-heading.
          05 filler pic x(10) value space.
          05 filler pic x(27) value " COUNTS AND CONTROL TOTALS ".
-         05 filler pic x(37) value "-------------------------------------".
+         05 filler pic x(37) value
+                   "-------------------------------------".
 
        01 ws-total-variables.
          05 ws-sl-tt pic 9(4) value 0.
@@ -94,15 +94,19 @@
 
        01 ws-sl-records-out.
          05 filler pic x value spaces.
-         05 filler pic x(38) value "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".
-         05 filler pic x(38) value "Sales and Layaway Records Total:     ".
+         05 filler pic x(38) value
+                   "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".
+         05 filler pic x(38) value
+                   "Sales and Layaway Records Total:     ".
          05 ws-sl-records-in pic Z,ZZ9.
 
        01 ws-sl-amount-out.
          05 filler pic x value spaces.
-         05 filler pic x(38) value "Sales and Layaway Amount Total:     ".
+         05 filler pic x(38) value
+                   "Sales and Layaway Amount Total:     ".
          05 ws-sl-amount-in pic $,$$$,$$9.99.
-         05 filler pic x(38) value "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".
+         05 filler pic x(38) value
+                   "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".
 
        01 ws-s-records-out.
          05 filler pic x value spaces.
@@ -198,7 +202,6 @@
            close input-file, sl-records-file, returns-file,
              cc-totals-report.
 
-           display "Run Complete 2!".
            goback.
 
        100-print-headings.

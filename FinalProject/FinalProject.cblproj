@@ -50,6 +50,16 @@
       <Project>{4C85D450-F6EF-4789-9075-DB8E249FE82D}</Project>
       <Package>{535C04D7-A2A5-47C7-83E0-B340A995CD1F}</Package>
     </ProjectReference>
+    <ProjectReference Include="..\RETURNS PROCESSING\RETURNS PROCESSING.cblproj">
+      <Name>RETURNS_PROCESSING</Name>
+      <Project>{06122EB8-31DD-45B1-AE8A-A50D4CB267D2}</Project>
+      <Package>{535C04D7-A2A5-47C7-83E0-B340A995CD1F}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\SandLProcessing\SandLProcessing.cblproj">
+      <Name>SandLProcessing</Name>
+      <Project>{73D91638-C8A1-40D0-B580-5020398FB7E7}</Project>
+      <Package>{535C04D7-A2A5-47C7-83E0-B340A995CD1F}</Package>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

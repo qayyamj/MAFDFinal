@@ -7,19 +7,19 @@
 
        file-control.
               select input-file
-                   assign to "../../valid.data"
+                   assign to "../FinalProject/valid.data"
                    organization is line sequential.
 
            select sl-records-file
-               assign to "../../slrecord.data"
+               assign to "../FinalProject/slrecord.data"
                organization is line sequential.
 
            select returns-file
-               assign to "../../returns.data"
+               assign to "../FinalProject/returns.data"
                organization is line sequential.
 
            select cc-totals-report
-               assign to "../../counts-controls-total.out"
+               assign to "../FinalProject/counts-controls-total.out"
                organization is line sequential.
 
        data division.

@@ -1,5 +1,6 @@
        identification division.
        author. Qayyam Jamal, Menu k, Aadithkeshev.
+       date-written. 2021-04-15.
        program-id. DATASPLITCOUNT.
 
        environment division.
@@ -197,6 +198,7 @@
            close input-file, sl-records-file, returns-file,
              cc-totals-report.
 
+           display "Run Complete 2!".
            goback.
 
        100-print-headings.

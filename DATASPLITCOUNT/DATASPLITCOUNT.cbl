@@ -7,7 +7,7 @@
 
        file-control.
               select input-file
-                   assign to "../valid.data"
+                   assign to "../../valid.data"
                    organization is line sequential.
 
            select sl-records-file
@@ -162,7 +162,7 @@
          05 filler pic x value space.
          05 filler
                    value "Transactions and Returns by Store".
-         05 filler pic x(29) value "=================================".
+         05 filler pic x(33) value "=================================".
 
        01 ws-store-heading-2.
          05 filler pic x value space.
@@ -308,11 +308,11 @@
              until ws-sub > ws-num-stores
 
                move ws-store-sl-tt-amount(ws-sub)
-                 to ws-store-sl-amount
+                 to ws-store-sl-amount(ws-sub)
                move ws-store-r-tt(ws-sub)
                  to ws-store-r-in(ws-sub)
                move ws-store-r-amount(ws-sub)
-                 to ws-store-rec-amount
+                 to ws-store-rec-amount(ws-sub)
            end-perform.
 
            write cc-total-output from ws-sl-records-out.

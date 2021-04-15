@@ -10,11 +10,11 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>.\bin\Debug\</OutputPath>
     <DebugSymbols>True</DebugSymbols>
     <MaxError>100</MaxError>
     <SourceFormat>Variable</SourceFormat>
     <DefineConstants>DEBUG</DefineConstants>
+    <OutputPath>.\bin\debug</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>.\bin\Release\</OutputPath>
@@ -43,6 +43,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EDIT.cbl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DATASPLITCOUNT\DATASPLITCOUNT.cblproj">
+      <Name>DATASPLITCOUNT</Name>
+      <Project>{4C85D450-F6EF-4789-9075-DB8E249FE82D}</Project>
+      <Package>{535C04D7-A2A5-47C7-83E0-B340A995CD1F}</Package>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

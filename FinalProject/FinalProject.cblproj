@@ -42,6 +42,7 @@
     <Import Include="System.Text" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DATASPLITCOUNT.cbl" />
     <Compile Include="EDIT.cbl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />

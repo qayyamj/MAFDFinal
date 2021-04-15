@@ -51,15 +51,15 @@
 
        fd cc-totals-report
           data record is cc-total-output
-          record contains 100 characters.
+          record contains 49 characters.
 
-       01 cc-total-output pic x(100).
+       01 cc-total-output pic x(49).
 
        working-storage section.
 
        01 ws-eof-flag pic x value "N".
 
-       01 ws-transaction-code pic x value spaces.
+       01 ws-transaction-code  pic x value spaces.
          88 ws-trans-sale
                    value "S".
          88 ws-trans-layaway

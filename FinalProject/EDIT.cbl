@@ -6,7 +6,7 @@
        input-output section.
        file-control.
            select input-file
-               assign to "bin/../project6.dat"
+               assign to "../../project6.dat"
                organization is line sequential.
 
            select valid-file
@@ -75,7 +75,8 @@
 
 
        working-storage section.
-       01 ws-eof-flag pic x value "N".
+       01 ws-eof-flag                      pic x
+               value "N".
       *-----------------------------------------------------------------
        01 ws-detail-line.
          05 ws-trans-code                  pic x.
@@ -153,7 +154,7 @@
                value "Total Records: ".
          05 filler                         pic x(5)
                value spaces.
-         05 ws-error-report-total          pic Z99
+         05 ws-error-report-total          pic ZZ9
                value 0.
       *-----------------------------------------------------------------
        01 ws-error-report-valid.
@@ -161,7 +162,7 @@
                value "Total Valid Records: ".
          05 filler                         pic x(5)
                value spaces.
-         05 ws-error-valid-total           pic Z99
+         05 ws-error-valid-total           pic ZZ9
                value 0.
       *-----------------------------------------------------------------
        01 ws-error-report-invalid.
@@ -169,7 +170,10 @@
                value "Total Invalid Records: ".
          05 filler                         pic x(5)
                value spaces.
-         05 ws-error-invalid-total         pic Z99
+         05 ws-error-invalid-total         pic ZZ9
+               value 0.
+
+       01 ws-sub                           pic 99
                value 0.
       ******************************************************************
        procedure division.
@@ -178,106 +182,130 @@
            open input input-file, output valid-file, invalid-file,
            errors-file.
 
+           read input-file
+               at end
+                   move "Y" to ws-eof-flag.
 
-           perform 100-process-records.
+           perform 100-process-records until ws-eof-flag = "Y".
+           perform 300-Write-files.
 
-
+      * Close files andend program
+           close input-file , valid-file , invalid-file , errors-file.
       * Exit program
            display "press enter key to exit...".
            accept return-code.
 
-      * Close files and end program
-           close input-file, valid-file, invalid-file, errors-file.
+           goback.
+
+
+
 
       *-----------------------------------------------------------------
        100-process-records.
+
            perform 200-validating-data.
       *    stuff go here WIP
 
-
-
-
            read input-file
                at end
-                   move "N" to ws-eof-flag.
+                   move "Y" to ws-eof-flag.
 
        200-validating-data.
+
            if not ws-valid-code then
                add 1 to ws-errors
+               add 1 to ws-errors-total
                move ws-transaction-error to ws-error-redef(ws-errors)
            end-if.
 
-
-           if not transaction-amount is numeric then
+           if transaction-amount not numeric then
                add 1 to ws-errors
-               move ws-invalid-trans-amount to  ws-error-redef(ws-errors)
+               add 1 to ws-errors-total
+               move ws-invalid-trans-amount to ws-error-redef(ws-errors)
            end-if.
 
            if not ws-valid-pay-type then
                add 1 to ws-errors
+               add 1 to ws-errors-total
                move ws-payment-type-error to ws-error-redef(ws-errors)
            end-if.
 
            if not ws-valid-store-num then
                add 1 to ws-errors
+               add 1 to ws-errors-total
                move ws-store-num-error to ws-error-redef(ws-errors)
            end-if.
 
            if not invoice1 = invoice2 then
                add 1 to ws-errors
-               move ws-invoice-format-error  to ws-error-redef(ws-errors)
+               add 1 to ws-errors-total
+               move ws-invoice-format-error to ws-error-redef(ws-errors)
            end-if.
 
            if not invoice-numbers is numeric then
                add 1 to ws-errors
+               add 1 to ws-errors-total
                move ws-invoice-repeat-error to ws-error-redef(ws-errors)
            end-if.
 
            if not ws-valid-invoice1 then
                add 1 to ws-errors
+               add 1 to ws-errors-total
                move ws-invoice-alpha-error to ws-error-redef(ws-errors)
            end-if.
 
            if not ws-valid-invoice2 then
                add 1 to ws-errors
+               add 1 to ws-errors-total
                move ws-invoice-alpha-error to ws-error-redef(ws-errors)
            end-if.
-           if not invoice-numbers <  900000  then
+
+           if not valid-nums then
                add 1 to ws-errors
                move ws-invoice-range-error to ws-error-redef(ws-errors)
            end-if.
 
-           if not invoice-numbers > 100000 then
-               add 1 to ws-errors
-               move ws-invoice-range-error to ws-error-redef(ws-errors)
-           end-if.
            if not sku-code = spaces then
                add 1 to ws-errors
                move ws-sku-error to ws-error-redef(ws-errors)
            end-if.
-       
 
 
 
            if ws-errors = 0 then
-               add 1 to ws-valid-total
-               move transaction-code to ws-trans-code
+               add 1                   to ws-valid-total
+               move transaction-code   to ws-trans-code
                move transaction-amount to ws-trans-amount
-               move payment-type to ws-pay-type
-               move store-number to ws-store-num
-               move invoice-number to ws-invoice-num
-               move sku-code to ws-sku-code
+               move payment-type       to ws-pay-type
+               move store-number       to ws-store-num
+               move invoice-number     to ws-invoice-num
+               move sku-code           to ws-sku-code
            else
                add 1 to ws-invalid-total
-               move transaction-code to ws-invalid-trans-code
+               move transaction-code   to ws-invalid-trans-code
                move transaction-amount to ws-invalid-trans-amount
-               move payment-type to ws-invalid-pay-type
-               move store-number to ws-invalid-store-num
-               move invoice-number to ws-invalid-invoice-num
-               move sku-code to ws-invalid-sku-code
+               move payment-type       to ws-invalid-pay-type
+               move store-number       to ws-invalid-store-num
+               move invoice-number     to ws-invalid-invoice-num
+               move sku-code           to ws-invalid-sku-code
            end-if.
 
-
+       300-Write-files.
+           move ws-valid-total         to ws-error-valid-total.
+           move ws-invalid-total       to ws-error-invalid-total.
+           write valid-record          from ws-detail-line.
+           write invalid-record        from ws-detail-invalid-line.
+           write errors-record         from ws-error-report1.
+           write errors-record         from ws-error-report2
+             after advancing 1 line.
+           write errors-record         from ws-error-report-num
+             after advancing 2 lines.
+           write errors-record         from ws-error-report-records
+             after advancing 1 line.
+           write errors-record         from ws-error-report-valid
+             after advancing 1 line.
+           write errors-record         from ws-error-report-invalid
+             after advancing 1 line.
 
 
        end program EDIT.

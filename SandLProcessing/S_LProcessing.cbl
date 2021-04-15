@@ -236,7 +236,8 @@
          05 ws-h-store-num         pic 99.
 
        01 ws-store-l-s-l-amount.
-         05 filler pic x(52) value "STORE WITH THE LOWEST S&L TOTAL TRANSACTION AMOUNT:".
+         05 filler pic x(52)
+         value "STORE WITH THE LOWEST S&L TOTAL TRANSACTION AMOUNT:".   
          05 filler pic x(5) value spaces.
          05 ws-l-store-num pic 99.
 
@@ -385,7 +386,8 @@
                add 1 to ws-ca-count
            end-if.
 
-           compute ws-ca-pcnt-calc rounded = (ws-ca-count / ws-s-l-count) * 100.
+           compute ws-ca-pcnt-calc rounded =
+             (ws-ca-count / ws-s-l-count) * 100.                        
            move ws-ca-pcnt-calc to ws-ca-pcnt.
            move ws-pcnt-sign to ws-ca-pcnt-sign.
            move ws-ca-count to ws-ca-num.
@@ -394,7 +396,8 @@
                add 1 to ws-cr-count
            end-if.
 
-           compute ws-cr-pcnt-calc rounded = (ws-cr-count / ws-s-l-count) * 100.
+           compute ws-cr-pcnt-calc rounded =
+             (ws-cr-count / ws-s-l-count) * 100.                       
            move ws-cr-pcnt-calc to ws-cr-pcnt.
            move ws-pcnt-sign to ws-cr-pcnt-sign.
            move ws-cr-count to ws-cr-num.
@@ -404,7 +407,8 @@
                add 1 to ws-db-count
            end-if.
 
-           compute ws-db-pcnt-calc rounded = (ws-db-count / ws-s-l-count) * 100.
+           compute ws-db-pcnt-calc rounded =
+             (ws-db-count / ws-s-l-count) * 100.                        
            move ws-db-pcnt-calc to ws-db-pcnt.
            move ws-pcnt-sign to ws-db-pcnt-sign.
            move ws-db-count to ws-db-num.
